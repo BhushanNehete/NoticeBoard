@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
+          integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" rel="stylesheet">
+
+    <link rel="stylesheet" type='text/css' href=" {% static 'notice/style.css' %}?20210510 ">
+
+    <title> {% block title %}{% endblock %} </title>
+</head>
+<body>
+<div class="top-header d-lg-block d-none bg-dark" style="height:30%">
+	<div class="">
+		<div class="d-flex justify-content-center align-items-center text-center">
+			<div class="">
+				<a class="navbar-brand d-inline-block" href="https://ghribmjal.raisoni.net/">
+				<img src="{% static 'notice\ghribmjal-logo.jpeg' %}" class="img-fluid" alt="GHRIBM, Jalgaon" title="G H Raisoni Institute of Business Management, Jalgaon">
+				</a>
+			</div>
+			<div class="mx-4">
+				<h1 class="text-warning">G H Raisoni Institute of Business Management, Jalgaon</h1>
+				<h5 class="text-white">An autonomous Institute Affiliated to Kavayitri Bahinabai Chaudhari North Maharashtra University Jalgaon</h5>
+				<h5 class="text-white">NAAC Accredited Grade "A" with CGPA 3.09”</h5>
+				<h6 class="text-white">DTE Code : 5152</h6>
+			</div>
+			<div class="">
+				<a class="navbar-brand d-inline-block" href="https://raisoni.net/" target="_blank">
+				<img src="{% static 'notice\rgi-logo.jpeg' %}" class="img-responsive" height="100" alt="RGI Logo" title="Raisoni Group of Institution">
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+    {% if messages %}
+		{% for msg in messages%}
+			<div class="w3-theme-border alert alert-{{ msg.tags }} alert-dismissible w-25" style="position:fixed;top:15px;right:15px;z-index:999">
+				<button type="button" class="close" data-dismiss="alert">
+					×
+				</button>
+				{{ msg }}
+			</div>
+
+		{% endfor %}
+	{% endif %}
+
+<div>
+    {% block content %}
+
+
+
+	{% endblock %}
+</div>
+
+    <script crossorigin="anonymous"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
+</body>
+</html>

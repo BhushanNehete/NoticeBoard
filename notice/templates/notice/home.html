@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Notices{% endblock %}
+{% block content %}
+
+<nav class="navbar sticky-top" style="background-color:#d18d10">
+  <span class="navbar-brand">Notice Board</span>
+    {% if request.user.is_authenticated %}
+    <div class="navbar-nav navbar-expand-lg justify-content-end nav">
+        {% if perms.notice.add_notice and perms.notice.add_department %}
+          <a class="nav-item nav-link btn btn-md px-1" href="{% url 'add' %}" role="button">Add Notice</a>
+          <a class="nav-item nav-link btn btn-md px-1" href="{% url 'dept' %}" role="button">Add Department</a>
+          <a class="nav-item nav-link btn btn-md px-1" href="{% url 'students' %}">Students</a>
+        {% endif %}
+        <a class="nav-item nav-link btn btn-md px-1" href="{% url 'contact' %}" role="button">Contact Us</a>
+        <a class="nav-item nav-link btn btn-md px-1" href="{% url 'logout' %}" role="button">Logout</a>
+    </div>
+</nav>
+{% endif %}
+
+
+<form action="{% url 'home' %}" class="d-flex m-2 my-3 col-4">
+    <select name="dept" class="form-control mr-4">
+        <option selected disabled>Select</option>
+        {% for dept in all_dept %}
+        <option value="{{ dept.id }}">{{ dept }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Show" class="btn btn-outline-success">
+</form>
+
+
+{% for ntc in notice %}
+    {% if request.user.is_authenticated %}
+    <div class="card mx-auto shadow-lg p-4 mb-4 bg-white w-75">
+      <div class="card-body">
+          <h5 class="card-title" style="font-size:25px">{{ ntc.title }} &nbsp;&nbsp;<span class="badge badge-primary p-2">{{ ntc.notice_department }}</span></h5>
+        <hr><p class="card-text">{{ ntc.description }}<br></p>
+            {% if ntc.image %}
+          <a target="_blank" href="{{ ntc.image.url}}">
+              <img id="myImg" src="{{ ntc.image.url}}" class="mb-3" style="max-height:300px"></a>
+          {% endif %}
+          <p class="card-text">{{ ntc.created }}</p>
+        <div class="d-flex">
+            {% if perms.notice.delete_notice and perms.notice.change_notice %}
+                <a href="{% url 'update' ntc.id %}" class="btn btn-outline-primary mx-2" role="button">Update</a>
+                <form action="{% url 'delete_ntc' ntc.id %}" method="post">{% csrf_token %}
+                    <input type="submit" class="btn btn-outline-danger" value="Delete">
+                </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}

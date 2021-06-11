@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<nav class="navbar sticky-top navbar-dark" style="background-color:#d18d10">
+  <span class="navbar-brand">Notice Board</span>
+    {% if request.user.is_authenticated %}
+    <div class="navbar-nav navbar-expand-lg justify-content-end nav">
+      <a class="nav-item nav-link btn btn-md px-1" href="{% url 'home' %}" class="btn btn-md" role="button">Home</a>
+      <a class="nav-item nav-link btn btn-md px-1" href="{% url 'logout' %}" class="btn btn-md" role="button">Logout</a>
+    </div>
+</nav>
+{% endif %}
+
+  <div class="card shadow-lg p-4 mt-5 w-75 mx-auto">
+    <div class="card-body">
+      <h4 class="card-title mb-3">Students</h4>
+      <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">E-mail</th>
+                  <th scope="col">Roll No.</th>
+                  <th scope="col">Div</th>
+                  <th scope="col">Department</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for user in users %}
+                <tr>
+                  <td>{{ user.first_name }}</td>
+                  <td>{{ user.last_name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.student.roll_no }}</td>
+                  <td>{{ user.student.div }}</td>
+                  <td>{{ user.student.department }}</td>
+                    {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}
+

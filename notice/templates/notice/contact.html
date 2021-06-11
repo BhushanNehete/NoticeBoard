@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+
+<nav class="navbar sticky-top navbar-dark" style="background-color:#d18d10">
+  <span class="navbar-brand">Notice Board</span>
+    {% if request.user.is_authenticated %}
+    <div class="navbar-nav navbar-expand-lg justify-content-end nav">
+      <a class="nav-item nav-link btn btn-md px-1" href="{% url 'home' %}" class="btn btn-md" role="button">Home</a>
+      <a class="nav-item nav-link btn btn-md px-1" href="{% url 'logout' %}" class="btn btn-md" role="button">Logout</a>
+    </div>
+</nav>
+{% endif %}
+
+{% if request.user.is_staff %}
+    {% for con in contact %}
+    <div class="card m-4 shadow-lg p-4 bg-white w-75 mx-auto">
+          <div class="card-body">
+              <h5 class="card-title">{{ con.first_name }} {{ con.last_name }}</h5>
+              <p class="card-text"><b>Phone:</b>{{ con.phone }} &nbsp;&nbsp; <b>E-mail:</b> {{ con.Email }} <br><hr> {{ con.message }}</p>
+          </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card m-4 shadow-lg p-4 bg-white w-50 mx-auto">
+        <div class="card-body">
+            <section class="get-in-touch">
+               <h1 class="title card-title">Get in touch</h1>
+               <form class="contact-form card-text" method="POST">{% csrf_token %}
+                   <div class="form-field">
+                       {{ form|crispy }}
+                   </div>
+
+                   <div class="form-field col-lg-12">
+                     <input class="submit-btn" type="submit" value="Submit">
+                  </div>
+               </form>
+            </section>
+{% endif %}
+{% endblock %}
+
